@@ -16,7 +16,10 @@
             </div>
         </div>
         <ChatsView class="mt-[100px]" />
-        <div class="ml-[420px] fixed w-[calc(100vw-420px)] h-[100vh] bg-gray-100 text-center">
+        <div v-if="open">
+            <MessageView/>
+        </div>
+        <div v-else class="ml-[420px] fixed w-[calc(100vw-420px)] h-[100vh] bg-gray-100 text-center">
             <div class="grid h-screen place-items-center">
                 <div>
                     <div class="w-full flex items-center justify-center">
@@ -32,10 +35,14 @@
 </template>
 
 <script setup>
+import {ref} from "vue"
 import ChatsView from "./ChatsView.vue"
+import MessageView from "./MessageView.vue"
 import AccountGroupIcon from "vue-material-design-icons/AccountGroup.vue"
 import DotsVerticalIcon from "vue-material-design-icons/DotsVertical.vue"
 import MagnifyIcon from "vue-material-design-icons/Magnify.vue"
+
+const open = ref(true)
 
 </script>
 
