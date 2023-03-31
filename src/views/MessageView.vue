@@ -1,6 +1,7 @@
 <template>
     <div class="ml-[420px] w-full ">
         <div class="w-full">
+            <div id="BG"></div>
             <div class="border-l border-green-500 w-full">
                 <div class="bg-[#F0F0F0] fixed z-10 min-w-[calc(100vw-420px)] flex justify-between items-center px-2 py-2">
                     <div class="flex items-center">
@@ -12,10 +13,15 @@
                     <DotsVerticalIcon fillColor="#515151" class="cursor-pointer" />
                 </div>
             </div>
-            <div id="messagesSection" class="pt-20 pb-8 z-[-1] h-[calc(100vh-65)] w-[calc(100vw)] overflow-auto fixed touch-auto">
+            <div id="messagesSection" class="pt-20 pb-8 z-[-1] h-[calc(100vh-65)] w-[calc(100vw-420px)] overflow-auto fixed touch-auto">
                 <div class="flex w-[calc(100%-50px)]">
                     <div class="inline-block bg-white p-2 rounded-md my-1">
-                        Lorem
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua 
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-1  float-right w-[calc(100%-50px)]">
+                    <div class="inline-block bg-green-200 p-2 rounded-md my-1">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua 
                     </div>
                 </div>
             </div>
@@ -30,6 +36,7 @@
                 </div>
 
             </div>
+        
         </div>
     </div>
 </template>
@@ -42,3 +49,13 @@ import PaperclipIcon from "vue-material-design-icons/Paperclip.vue"
 
 
 </script>
+
+<style scoped>
+#BG{
+    background: url('message-bg.png') no-repeat center;
+    width:-webkit-fill-available;
+    height:100%;
+    position: fixed;
+    z-index: -1;
+}
+</style>

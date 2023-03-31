@@ -23,7 +23,7 @@
             <div class="grid h-screen place-items-center">
                 <div>
                     <div class="w-full flex items-center justify-center">
-                        <img width="375"  src="https://random.imagecdn.app/400/200" alt="">
+                        <img width="375"  src="w-web-not-loaded-chat.png" alt="">
                          
                     </div>
                     <div class="text-[32px] text-gray-500 font-light mt-10">Whatsapp Web</div>
