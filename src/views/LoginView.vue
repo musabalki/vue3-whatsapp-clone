@@ -12,9 +12,23 @@
                     Whatsapp Clone
                 </div>
                 <div class="w-full flex justify-center bg-[#191910] p-3 rounded-md">
-                    <GoogleLogin/>
+                    <GoogleLogin :callback="callback" />
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script setup>
+import axios from "axios"
+
+const callback = async (response)=>{
+    try{
+        let res = await axios.post('http://localhost:4001/api/google-login',{
+        token:response.credential
+            })
+            console.log(res.data)
+    }catch(error){
+        console.log(error)
+    }
+}
+</script>
