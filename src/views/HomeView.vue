@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {onMounted, ref} from "vue"
 import ChatsView from "./ChatsView.vue"
 import MessageView from "./MessageView.vue"
 import FindFriendsView from "./FindFriendsView.vue"
@@ -54,6 +54,16 @@ const userStore = useUserStore();
 const open = ref(true)
 const showFindFriends = ref(false)
 const router = useRouter();
+
+
+onMounted(async ()=>{
+    try{ 
+    await userStore.getAllUsers();
+    //console.log(userStore.allUsers)
+    }catch(error){
+        console.log(error)
+    }
+})
 
 const logout = ()=>{
     let res = confirm('Are you sute you want to logout ?');
