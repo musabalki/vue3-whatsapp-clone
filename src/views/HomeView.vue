@@ -11,20 +11,23 @@
             <div class="bg-white w-full px-2 border-b shadow-sm">
                 <div class="px-1 m-2 bg-[#F0F0F0] flex items-center justify-center rounded-md">
                     <MagnifyIcon fillColor="#515151" :size="18" class="ml-2" />
-                    <input type="text" class="ml-5 appearance-none w-full bg-[#F0F0F0] py-1.5 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline placeholder:text-sm placeholder:text-gray-500" autocomplete="off" placeholder="Start a new chat">
+                    <input @click="showFindFriends = !showFindFriends" type="text" class="ml-5 appearance-none w-full bg-[#F0F0F0] py-1.5 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline placeholder:text-sm placeholder:text-gray-500" autocomplete="off" placeholder="Start a new chat">
                 </div>
             </div>
         </div>
+        
         <div v-if="showFindFriends">
             <ChatsView class="mt-[100px]" />           
         </div>
         <div v-else>
             <FindFriendsView/>
         </div>
-        <div v-if="open">
+        
+        <div v-if="userDataForChat.length">
             <MessageView/>
         </div>
         <div v-else class="ml-[420px] fixed w-[calc(100vw-420px)] h-[100vh] bg-gray-100 text-center">
+         
             <div class="grid h-screen place-items-center">
                 <div>
                     <div class="w-full flex items-center justify-center">
@@ -49,12 +52,12 @@ import DotsVerticalIcon from "vue-material-design-icons/DotsVertical.vue"
 import MagnifyIcon from "vue-material-design-icons/Magnify.vue"
 import {useUserStore} from "../store/user-store"
 import {useRouter} from "vue-router"
+import { storeToRefs } from "pinia"
 
 const userStore = useUserStore();
-const open = ref(true)
-const showFindFriends = ref(false)
 const router = useRouter();
 
+const {showFindFriends,userDataForChat} = storeToRefs(userStore)
 
 onMounted(async ()=>{
     try{ 

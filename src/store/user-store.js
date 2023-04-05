@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import axios from "axios"
 import {v4 as uuid} from 'uuid'
 import {db} from '@/firebase.js'
-import {setDoc,getDoc,doc,getDocs, collection} from "firebase/firestore"
+import {setDoc,getDoc,doc,getDocs, collection, arrayUnion,updateDoc} from "firebase/firestore"
 
 axios.defaults.baseURL="http://localhost:4001"
 export const useUserStore = defineStore('userStore', {
@@ -13,7 +13,9 @@ export const useUserStore = defineStore('userStore', {
     picture:'',
     firstname:'',
     lastname:'',
-    allUsers:[]
+    allUsers:[],
+    userDataForChat:[],
+    showFindFriends:false
   }),
   actions: {
     async getUserDetailsFromGoogle(response){
@@ -40,6 +42,9 @@ export const useUserStore = defineStore('userStore', {
          this.picture=""
          this.firstname=""
          this.lastname=""
+         this.userDataForChat=[]
+         this.allUsers=[]
+         this.showFindFriends = false
     },  
     async getAllUsers (){
       const querySnapshot = await getDocs(collection(db,"users"))
@@ -67,7 +72,42 @@ export const useUserStore = defineStore('userStore', {
       }catch(error){
         console.log(error)
       }
-    }
+    },
+    async sendMessage (data) {
+      try {
+        if (data.chatId) {
+          await updateDoc(doc(db, `chat/${data.chatId}`), {
+            sub1HasViewed: false,
+            sub2HasViewed: false,
+            messages: arrayUnion({
+              sub: this.sub,
+              message: data.message,
+              createdAt: Date.now()
+            })
+          })
+        } else {
+          let id = uuid()
+          await setDoc(doc(db, `chat/${id}`), {
+            sub1: this.sub,
+            sub2: data.sub2,
+            sub1HasViewed: false,
+            sub2HasViewed: false,
+
+            messages: [{
+              sub: this.sub,
+              message: data.message,
+              createdAt: Date.now()
+            }]
+
+          })
+
+          this.userDataForChat[0].id = id
+          this.showFindFriends = false
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
   persist:true
 })

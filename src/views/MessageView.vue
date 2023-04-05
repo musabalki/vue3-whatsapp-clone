@@ -29,8 +29,8 @@
                 <div class="flex items-center">
                     <EmoticonExcitedOutlineIcon :size="27" fillColor="#515151" class="mx-1.5"/>
                     <PaperclipIcon :size="27" fillColor="#515151" class="mx-1.5 mr-3"/>
-                    <input type="text" class="mr-1 shadow appearance-none w-full rounded-lg py-3 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline  " autocomplete="off" placeholder="Message">
-                    <button class="ml-3 p-2 w-12 flex items-center justify-center">
+                    <input v-model="message" type="text" class="mr-1 shadow appearance-none w-full rounded-lg py-3 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline  " autocomplete="off" placeholder="Message">
+                    <button class="ml-3 p-2 w-12 flex items-center justify-center" @click="sendMessage">
                         <SendIcon fillColor="#515151"/>
                     </button>
                 </div>
@@ -46,8 +46,23 @@ import MessageRowComponent from '../components/MessageRowComponent.vue';
 import DotsVerticalIcon from "vue-material-design-icons/DotsVertical.vue"
 import EmoticonExcitedOutlineIcon from "vue-material-design-icons/EmoticonExcitedOutline.vue"
 import PaperclipIcon from "vue-material-design-icons/Paperclip.vue"
+import SendIcon from "vue-material-design-icons/Send.vue"
+import { useUserStore } from '../store/user-store';
+import {ref} from 'vue'
+import { storeToRefs } from 'pinia';
+
+const userStore = useUserStore();
+const {userDataForChat,sub} = storeToRefs(userStore)
+let message = ref('')
 
 
+const sendMessage = async ()=>{
+    await userStore.sendMessage({
+        message:message.value,
+        sub2:userDataForChat.value[0].sub2,
+        chatId:userDataForChat.value[0].id,
+    })
+}
 </script>
 
 <style scoped>
