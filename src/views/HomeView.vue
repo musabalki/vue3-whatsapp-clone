@@ -61,7 +61,8 @@ const {showFindFriends,userDataForChat} = storeToRefs(userStore)
 
 onMounted(async ()=>{
     try{ 
-    await userStore.getAllUsers();
+     userStore.getAllUsers();
+     await userStore.getAllChatsByUser()
     //console.log(userStore.allUsers)
     }catch(error){
         console.log(error)

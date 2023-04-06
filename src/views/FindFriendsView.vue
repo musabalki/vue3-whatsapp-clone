@@ -31,7 +31,6 @@ const hideMe = (user) => {
     return true
 }
 const createNewChat = (user) => {
-    alert(123)
     userDataForChat.value = []
     userDataForChat.value.push({
         id: '',
