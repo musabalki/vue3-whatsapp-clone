@@ -167,6 +167,12 @@ export const useUserStore = defineStore('userStore', {
         console.log(error)
       }
     },
+    async hasReadMessage(data){
+      await updateDoc(doc(db,`chat/${data.id}`),{
+        [data.key1]:data.val1,
+        [data.key2]:data.val2,
+      },{merge:true})
+    }
   },
   persist:true
 })
