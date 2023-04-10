@@ -39,7 +39,7 @@
                     <EmoticonExcitedOutlineIcon :size="27" fillColor="#515151" class="mx-1.5"/>
                     <PaperclipIcon :size="27" fillColor="#515151" class="mx-1.5 mr-3"/>
                     <input v-model="message" type="text" class="mr-1 shadow appearance-none w-full rounded-lg py-3 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline  " autocomplete="off" placeholder="Message">
-                    <button  class="ml-3 p-2 w-12 flex items-center justify-center" @click="sendMessage">
+                    <button :disabled="disableBtn" class="ml-3 p-2 w-12 flex items-center justify-center" @click="sendMessage">
                         <SendIcon fillColor="#515151"/>
                     </button>
                 </div>
@@ -57,13 +57,22 @@ import EmoticonExcitedOutlineIcon from "vue-material-design-icons/EmoticonExcite
 import PaperclipIcon from "vue-material-design-icons/Paperclip.vue"
 import SendIcon from "vue-material-design-icons/Send.vue"
 import { useUserStore } from '../store/user-store';
-import {ref} from 'vue'
+import {ref,watch} from 'vue'
 import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore();
 const {userDataForChat,currentChat,sub} = storeToRefs(userStore)
 let message = ref('')
-let disableBtn = ref('')
+let disableBtn = ref(false)
+
+watch(()=>currentChat.value,(chat)=>{
+    if(chat.length){
+        setTimeout(() => {
+            let objDiv = document.getElementById('MessagesSection')
+            objDiv.scrollTop=objDiv.scrollHeight
+        }, 50);
+    }
+},{deep:true})
 
 const sendMessage = async ()=>{
     console.log(message)
@@ -88,7 +97,9 @@ const sendMessage = async ()=>{
             data.val2=true
         }
         await userStore.hasReadMessage(data)
-
+        let objDiv = document.getElementById('MessagesSection')
+        objDiv.scroll=objDiv.scrollHeight
+        disableBtn.value=false
 }
 </script>
 
