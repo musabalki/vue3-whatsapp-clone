@@ -5,9 +5,9 @@
             <div class="border-l border-green-500 w-full">
                 <div class="bg-[#F0F0F0] fixed z-10 min-w-[calc(100vw-420px)] flex justify-between items-center px-2 py-2">
                     <div class="flex items-center">
-                        <img class="rounded-full mx-1 w-10"  src="https://random.imagecdn.app/100/100" alt="">
-                        <div class="text-gray-900 ml-1 font-semibold">
-                            Frank
+                        <img class="rounded-full mx-1 w-10"  :src="userDataForChat[0].picture" v-if="userDataForChat[0] && userDataForChat[0].picture" alt="">
+                        <div class="text-gray-900 ml-1 font-semibold" :src="userDataForChat[0].picture" v-if="userDataForChat[0] && userDataForChat[0].firstName">
+                            {{ userDataForChat[0].firstName }}
                         </div>
                     </div>
                     <DotsVerticalIcon fillColor="#515151" class="cursor-pointer" />
@@ -39,7 +39,7 @@
                     <EmoticonExcitedOutlineIcon :size="27" fillColor="#515151" class="mx-1.5"/>
                     <PaperclipIcon :size="27" fillColor="#515151" class="mx-1.5 mr-3"/>
                     <input v-model="message" type="text" class="mr-1 shadow appearance-none w-full rounded-lg py-3 px-2.5 text-gray-700 leading-tight focus:outline-noe focus:shadow-outline  " autocomplete="off" placeholder="Message">
-                    <button :disabled="disableBtn" class="ml-3 p-2 w-12 flex items-center justify-center" @click="sendMessage">
+                    <button :disabled="message.length==0" class="ml-3 p-2 w-12 flex items-center justify-center" @click="sendMessage">
                         <SendIcon fillColor="#515151"/>
                     </button>
                 </div>
@@ -90,10 +90,10 @@ const sendMessage = async (chat)=>{
             key1:'sub1HasViewed',val1:false,
             key2:'sub2HasViewed',val2:false,
         }
-        if(chat.sub1 ===sub.value){
+        if(userData.sub1 ===sub.value){
             data.val1=true
             data.val2=false
-        }else if (chat.sub2 ===sub.value){
+        }else if (userData.sub2 ===sub.value){
             data.val1=false
             data.val2=true
         }
