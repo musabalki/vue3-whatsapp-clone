@@ -74,7 +74,7 @@ watch(()=>currentChat.value,(chat)=>{
     }
 },{deep:true})
 
-const sendMessage = async ()=>{
+const sendMessage = async (chat)=>{
     console.log(message)
     if(message.value==='') return
     disableBtn.value=true
@@ -84,8 +84,9 @@ const sendMessage = async ()=>{
         chatId:userDataForChat.value[0].id,
     })
     message.value=''
+    const userData = userDataForChat.value[0]
     let data = {
-            id:chat.id,
+            id:userData.id,
             key1:'sub1HasViewed',val1:false,
             key2:'sub2HasViewed',val2:false,
         }

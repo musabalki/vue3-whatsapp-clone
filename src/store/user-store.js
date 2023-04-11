@@ -13,9 +13,9 @@ export const useUserStore = defineStore('userStore', {
     picture:'',
     firstname:'',
     lastname:'',
-    allUsers:[],
     userDataForChat:[],
     chats:[],
+    allUsers:[],
     showFindFriends:false,
     currentChat:null,
     removeUsersFromFindFriends:[]
@@ -48,6 +48,10 @@ export const useUserStore = defineStore('userStore', {
          this.userDataForChat=[]
          this.allUsers=[]
          this.showFindFriends = false
+         this.chats=[]
+         this.currentChat=null
+         this.removeUsersFromFindFriends=[]
+
     },  
     async getAllUsers (){
       const querySnapshot = await getDocs(collection(db,"users"))
